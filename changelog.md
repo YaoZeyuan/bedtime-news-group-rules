@@ -1,6 +1,6 @@
 # 群规变更记录 (Changelog)
 
-本文档记录了“睡前消息讨论群（非官方）”群规的变更历史，遵循 [语义化版本](https://semver.org/lang/zh-CN/) 规范。
+本文档记录了“睡前消息讨论群（非官方）”群规的**大版本**变更历史，遵循 [语义化版本](https://semver.org/lang/zh-CN/) 规范。 小版本变更可见[commit 记录](https://github.com/YaoZeyuan/bedtime-news-group-rules/commits/main/)
 
 ## 版本规范
 - **主版本号**：群规结构或基本原则的重大变更（如管理机制改革）
