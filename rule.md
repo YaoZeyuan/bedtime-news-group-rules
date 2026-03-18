@@ -4,7 +4,7 @@
 
 查看群规变更历史：https://github.com/YaoZeyuan/bedtime-news-group-rules
 
-查看群聊机器人功能: http://buzhia.cn:27788/?chatroom=50347169620%40chatroom
+查看群聊机器人功能: http://buzhia.cn:27788/?chatroom=R:10915684153678900
 
 主流AI: https://llm2014.github.io/llm_benchmark/
 
