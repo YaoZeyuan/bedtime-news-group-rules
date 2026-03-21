@@ -8,7 +8,7 @@
 
 主流AI: https://llm2014.github.io/llm_benchmark/
 
-爱发电赞助计划(记得将用户名和群聊名保持一致)：https://afdian.com/a/bedtime-news-group/plan
+爱发电赞助计划(记得将用户名和群聊名保持一致)：https://ifdian.net/a/bedtime-news-group/plan
 
 【特殊说明】
 
