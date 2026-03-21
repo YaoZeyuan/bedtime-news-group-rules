@@ -4,11 +4,13 @@
 
 查看群规变更历史：https://github.com/YaoZeyuan/bedtime-news-group-rules
 
-查看群聊机器人功能: http://buzhia.cn:27788/?chatroom=R:10915684153678900
+查看群聊机器人功能: http://t.cn/AXfCyGJ3
 
-主流AI: https://llm2014.github.io/llm_benchmark/
+主流AI: http://t.cn/AXbn82u3
 
 爱发电赞助计划(记得将用户名和群聊名保持一致)：https://ifdian.net/a/bedtime-news-group/plan
+
+历史警告记录: http://t.cn/AXfCLr3G
 
 【特殊说明】
 
