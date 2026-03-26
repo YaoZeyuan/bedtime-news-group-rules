@@ -10,7 +10,7 @@
 
 爱发电赞助计划(记得将用户名和群聊名保持一致)：https://ifdian.net/a/bedtime-news-group/plan
 
-历史警告记录: http://t.cn/AXfCLr3G
+历史警告记录: http://t.cn/AXfeDam8
 
 【特殊说明】
 
