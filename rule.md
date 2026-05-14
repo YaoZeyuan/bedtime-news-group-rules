@@ -6,11 +6,11 @@
 
 查看群聊机器人功能: http://t.cn/AXfCyGJ3
 
+群知识库(警告列表/爱发电收支详情): http://t.cn/AXfeDam8
+
 主流AI: http://t.cn/AXbn82u3
 
 爱发电赞助计划(记得将用户名和群聊名保持一致)：https://ifdian.net/a/bedtime-news-group/plan
-
-历史警告记录: http://t.cn/AXfeDam8
 
 【特殊说明】
 

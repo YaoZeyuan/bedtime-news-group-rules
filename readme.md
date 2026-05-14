@@ -30,6 +30,7 @@
 ### 3. 荣誉殿堂
 - AI判定需消耗Token，机器人也需要维护经费。为保障群聊环境可持续进行，设置荣誉殿堂以表彰群友
 - 爱发电赞助入口：https://afdian.com/a/bedtime-news-group
+- 电费收支明细：https://docs.qq.com/space/DY3J6YnhJRGttTGJM
 - 群主责任：每月在群内/爱发电中主动公布开支情况，发电群友提问电量使用时必须回应
 - 发电权限(高级称号包含之前级别权限): 
 
