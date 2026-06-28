@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import fallbackRules from "../群组文档/rule.md?raw";
 import heroImage from "./assets/hero.png";
+import { Analytics } from "@vercel/analytics/vue";
 import sponsorGuideImage from "./assets/爱发电权益说明.jpg";
 
 type RuleStatus = "loading" | "live" | "fallback";
@@ -663,6 +664,7 @@ function escapeAttribute(value: string) {
 
 <template>
   <span id="top"></span>
+  <Analytics />
   <header class="site-header">
     <a
       class="brand"
