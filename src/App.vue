@@ -515,10 +515,8 @@ function escapeAttribute(value: string) {
 
     <nav class="site-nav" aria-label="站内导航">
       <a href="#field-notes">讨论现场</a>
-      <a href="#why-follow">群组目标</a>
       <a href="#rules">规则全文</a>
       <a href="#honor">荣誉殿堂</a>
-      <a href="#cases">释规案例</a>
       <a href="#links">资料导航</a>
     </nav>
   </header>
@@ -558,9 +556,9 @@ function escapeAttribute(value: string) {
       <div class="section-inner">
         <div class="section-heading">
           <p class="eyebrow">Field Notes</p>
-          <h2>先看这个群聊什么</h2>
+          <h2>先看看这个群聊什么</h2>
           <p>
-            以下内容来自历史群聊梳理的脱敏归纳：基于原始记录，遮蔽发言身份，只保留主题、问题意识和讨论方式。可以在入群后发送「梳理20260601」查看对应日期的群聊总结
+            以下内容来自历史群聊梳理的脱敏归纳：基于原始记录，遮蔽发言身份，只保留主题、问题意识和讨论方式。可以在入群后发送指令如「梳理20260601」查看对应日期的群聊总结
           </p>
         </div>
 
@@ -589,7 +587,7 @@ function escapeAttribute(value: string) {
           <p class="eyebrow">Why It Matters</p>
           <h2>我们的目标</h2>
           <p>
-            考核群聊的不是“消息多少”，而是能否平心静气的探讨内容：在AI规约下，将大家持有的观点、证据、工具和规则放到同一场域中互相校准。
+            相较于活跃度，我们更看重群聊质量，期望能维护一个可以平心静气就事论事的键政群组：在AI规约下，引导大家将持有的观点、证据进行互相校准。
           </p>
         </div>
 
