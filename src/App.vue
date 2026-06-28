@@ -26,9 +26,9 @@ const loadedAt = ref("");
 
 const heroActions = [
   { label: "围观讨论现场", href: "#field-notes" },
-  { label: "为什么值得关注", href: "#why-follow" },
-  { label: "查看群规", href: "#rules" },
-  { label: "公开入口", href: "#links" },
+  { label: "我们看重什么", href: "#why-follow" },
+  { label: "群规全文", href: "#rules" },
+  { label: "资料导航", href: "#links" },
 ];
 
 const principles = [
@@ -217,7 +217,7 @@ const cases = [
   },
   {
     title: "三法司会审",
-    text: "解释多 AI 判定不一致时，如何采用对被裁定者最有利的结果。",
+    text: "当多个 AI 判定不一时，采用对被裁定者最有利结果的执行细则。",
   },
 ];
 
@@ -243,12 +243,12 @@ const linkGroups = [
   {
     label: "GitHub 仓库",
     href: repoUrl,
-    description: "查看源码、群规和版本记录",
+    description: "查看源码、群规和变更历史",
   },
   {
     label: "群规原文",
     href: ruleSourceUrl,
-    description: "在 GitHub 中查阅",
+    description: "GitHub 上的原始文档",
   },
   {
     label: "释规案例库",
@@ -265,7 +265,7 @@ const linkGroups = [
     href: sponsorUrl,
     description: "支持 AI 判定与机器人维护",
   },
-  { label: "收支明细", href: ledgerUrl, description: "查看电费与维护成本记录" },
+  { label: "收支明细", href: ledgerUrl, description: "查看充电与支出记录" },
   {
     label: "主流 AI 参考",
     href: aiRankingUrl,
@@ -515,11 +515,11 @@ function escapeAttribute(value: string) {
 
     <nav class="site-nav" aria-label="站内导航">
       <a href="#field-notes">讨论现场</a>
-      <a href="#why-follow">为什么关注</a>
-      <a href="#rules">群规全文</a>
+      <a href="#why-follow">群组目标</a>
+      <a href="#rules">规则全文</a>
       <a href="#honor">荣誉殿堂</a>
       <a href="#cases">释规案例</a>
-      <a href="#links">入口</a>
+      <a href="#links">资料导航</a>
     </nav>
   </header>
 
@@ -840,7 +840,7 @@ function escapeAttribute(value: string) {
         <div class="section-heading compact-heading">
           <p class="eyebrow">Public Entries</p>
           <h2>公开入口</h2>
-          <p>这些入口用于查看公开资料、赞助计划、收支明细和工具说明。</p>
+          <p>可以从这里查看群组公开资料、赞助计划、收支明细与工具说明。</p>
         </div>
 
         <div class="link-grid">
