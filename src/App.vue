@@ -25,17 +25,76 @@ const ruleError = ref("");
 const loadedAt = ref("");
 
 const heroActions = [
+  { label: "围观讨论现场", href: "#field-notes" },
+  { label: "为什么值得关注", href: "#why-follow" },
   { label: "查看群规", href: "#rules" },
-  { label: "荣誉殿堂", href: "#honor" },
-  { label: "释规案例", href: "#cases" },
-  { label: "变更记录", href: "#changelog" },
+  { label: "公开入口", href: "#links" },
 ];
 
 const principles = [
   { value: "AI", label: "辅助裁定" },
-  { value: "3", label: "警告移出阈值" },
+  { value: "3次", label: "警告移出阈值" },
   { value: "24h", label: "默认警告有效期" },
   { value: "Git", label: "规则版本管理" },
+];
+
+const discussionHighlights = [
+  {
+    topic: "AI 与产业现实",
+    question:
+      "“国产 AI 已经完全自主”这类说法，哪些部分有证据，哪些只是营销叙事？",
+    detail:
+      "讨论从芯片、训练、推理、部署成本和行业反馈进行拆解。有人提出乐观判断，也有人用具体采购和部署经验降温，最后通常落到“证据链够不够完整”。",
+    tags: ["AI", "产业", "证据链"],
+  },
+  {
+    topic: "社会政策与公共议题",
+    question:
+      "生育补贴、教育资源、劳动制度这类问题，应该看共识、效率，还是长期结构？",
+    detail:
+      "群友会把政策目标、现实约束和个人经验放在同一张桌上讨论。观点可以激烈，但需要说明推理路径，不能只用立场替代论证。",
+    tags: ["政策", "社会", "推演"],
+  },
+  {
+    topic: "规则自治现场",
+    question: "当 AI 判定、管理员执行和群友申诉发生冲突时，规则如何继续迭代？",
+    detail:
+      "群内会围绕警告有效期、Top3 机制、释规边界和管理员责任继续修订成文规则。规则不是装饰，而是会在争议中被测试。",
+    tags: ["AI 审判", "释规", "自治"],
+  },
+  {
+    topic: "长期判断与投资",
+    question: "面对市场情绪、科技叙事和宏观判断，怎样减少拍脑袋？",
+    detail:
+      "讨论常用历史回溯、十年前观点校验、模型复盘等方式过滤噪声。重点不是喊单，而是把判断过程暴露出来接受校准。",
+    tags: ["投资", "复盘", "模型"],
+  },
+  {
+    topic: "生活经验互助",
+    question: "严肃讨论之外，普通人的日常问题如何被认真对待？",
+    detail:
+      "租房、减肥、工具使用、学习路径和工作焦虑也会被拆解。宏大议题和生活细节并置，是这个群很有烟火气的一面。",
+    tags: ["生活", "互助", "工具"],
+  },
+];
+
+const valuePoints = [
+  {
+    title: "信息增量优先",
+    text: "不追求单纯热闹，更看重资料、事实、解释框架和能被复用的判断方法。",
+  },
+  {
+    title: "证据链约束",
+    text: "争议观点需要说明来源、数据可靠性和推理路径。观点可以锋利，但不能只靠情绪推进。",
+  },
+  {
+    title: "AI 参与治理",
+    text: "AI 不只是聊天工具，也参与概念校准、审判辅助和资料整理；它的误判与边界同样会被讨论。",
+  },
+  {
+    title: "成文规则自治",
+    text: "群规、释规案例和变更记录公开维护。争议会沉淀成规则，而不是只留在口头印象里。",
+  },
 ];
 
 const ruleCards = [
@@ -222,7 +281,7 @@ const linkGroups = [
 const ruleStatusText = computed(() => {
   if (ruleStatus.value === "loading") return "正在读取 GitHub 最新群规";
   if (ruleStatus.value === "live")
-    return `已读取 GitHub 最新内容${loadedAt.value ? `：${loadedAt.value}` : ""}`;
+    return `已读取 GitHub 记录，文档更新于${loadedAt.value ? `：${loadedAt.value}` : ""}`;
   return "GitHub 读取失败，正在显示本地快照";
 });
 
@@ -455,8 +514,10 @@ function escapeAttribute(value: string) {
     </a>
 
     <nav class="site-nav" aria-label="站内导航">
-      <a href="#honor">荣誉殿堂</a>
+      <a href="#field-notes">讨论现场</a>
+      <a href="#why-follow">为什么关注</a>
       <a href="#rules">群规全文</a>
+      <a href="#honor">荣誉殿堂</a>
       <a href="#cases">释规案例</a>
       <a href="#links">入口</a>
     </nav>
@@ -466,11 +527,11 @@ function escapeAttribute(value: string) {
     <section class="hero-section">
       <img class="hero-art" :src="heroImage" alt="" aria-hidden="true" />
       <div class="section-inner hero-content">
-        <p class="eyebrow">Unofficial Rule Archive</p>
-        <h1>睡前消息讨论群规则站</h1>
+        <p class="eyebrow">Unofficial Bedtime Group</p>
+        <h1>睡前消息讨论组</h1>
         <p class="hero-copy">
-          一个观众自发维护的非官方规则与自治文档站，记录群规、释规案例、荣誉殿堂与版本变更。
-          欢迎在此查阅群组规则与治理说明。
+          一个观众自发维护的非官方讨论组。这里用资料、逻辑、AI
+          校准和成文规则，试图维护一个值得每日通读的小宇宙。
         </p>
 
         <div class="hero-actions" aria-label="主要入口">
@@ -493,99 +554,53 @@ function escapeAttribute(value: string) {
       </div>
     </section>
 
-    <section id="honor" class="section honor-section">
+    <section id="field-notes" class="section field-notes-section">
       <div class="section-inner">
-        <div class="honor-feature">
-          <div>
-            <div class="section-heading">
-              <p class="eyebrow">Honor Hall</p>
-              <h2>荣誉殿堂</h2>
-              <p>
-                AI
-                判定、机器人维护和公开资料整理都需要持续成本。荣誉殿堂用于感谢发电群友，也让电费和
-                Token 成本能被公开追踪。
-              </p>
-              <p>
-                高阶档位默认拥有其下所有档位权限；以下名单仅展示匿名称呼与历史最高发电档位。
-              </p>
-            </div>
-
-            <div class="honor-actions">
-              <a
-                class="button button-primary"
-                :href="sponsorUrl"
-                target="_blank"
-                rel="noreferrer"
-                >爱发电赞助计划</a
-              >
-              <a
-                class="button"
-                :href="ledgerUrl"
-                target="_blank"
-                rel="noreferrer"
-                >查看收支明细</a
-              >
-            </div>
-
-            <div class="supporter-panel" aria-label="发电群友感谢名单">
-              <div class="supporter-panel-head">
-                <span>{{ supporterThanks.length }} 位</span>
-                <strong>感谢发电群友(名单截至2026-06)</strong>
-              </div>
-              <div class="supporter-marquee">
-                <div class="supporter-track">
-                  <span
-                    v-for="(supporter, index) in rollingSupporters"
-                    :key="`${supporter.name}-${supporter.tier}-${index}`"
-                    class="supporter-chip"
-                  >
-                    <b>{{ supporter.name }}</b>
-                    <small>{{ supporter.tier }}</small>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <figure class="sponsor-guide-card">
-            <img :src="sponsorGuideImage" alt="发电档位与权限说明" />
-            <figcaption>发电档位与权限说明</figcaption>
-          </figure>
+        <div class="section-heading">
+          <p class="eyebrow">Field Notes</p>
+          <h2>先看这个群聊什么</h2>
+          <p>
+            以下内容来自历史群聊梳理的脱敏归纳：基于原始记录，遮蔽发言身份，只保留主题、问题意识和讨论方式。可以在入群后发送「梳理20260601」查看对应日期的群聊总结
+          </p>
         </div>
 
-        <div class="supporter-board">
+        <div class="discussion-grid">
           <article
-            v-for="group in supporterGroups"
-            :key="group.tier"
-            class="supporter-group"
+            v-for="item in discussionHighlights"
+            :key="item.topic"
+            class="discussion-card"
           >
-            <h3>{{ group.tier }}</h3>
-            <div class="supporter-names">
-              <span
-                v-for="name in group.names"
-                :key="`${group.tier}-${name}`"
-                class="supporter-name"
-                >{{ name }}</span
-              >
+            <div class="discussion-card-head">
+              <span>{{ item.topic }}</span>
+              <div class="discussion-tags" aria-label="讨论标签">
+                <small v-for="tag in item.tags" :key="tag">{{ tag }}</small>
+              </div>
             </div>
+            <h3>{{ item.question }}</h3>
+            <p>{{ item.detail }}</p>
           </article>
         </div>
+      </div>
+    </section>
 
-        <p class="tier-note">
-          档位按权益递进展示：后续每一级默认继承之前全部权益，并追加本级专属权限。
-        </p>
+    <section id="why-follow" class="section value-section">
+      <div class="section-inner two-column">
+        <div class="section-heading">
+          <p class="eyebrow">Why It Matters</p>
+          <h2>我们的目标</h2>
+          <p>
+            考核群聊的不是“消息多少”，而是能否平心静气的探讨内容：在AI规约下，将大家持有的观点、证据、工具和规则放到同一场域中互相校准。
+          </p>
+        </div>
 
-        <div class="tier-grid">
+        <div class="value-grid">
           <article
-            v-for="tier in honorTiers"
-            :key="tier.title"
-            class="tier-card"
+            v-for="point in valuePoints"
+            :key="point.title"
+            class="value-card"
           >
-            <div>
-              <h3>{{ tier.title }}</h3>
-              <p class="tier-amount">{{ tier.amount }}</p>
-            </div>
-            <p>{{ tier.privilege }}</p>
+            <h3>{{ point.title }}</h3>
+            <p>{{ point.text }}</p>
           </article>
         </div>
       </div>
@@ -736,6 +751,86 @@ function escapeAttribute(value: string) {
             rel="noreferrer"
             >查看完整变更记录</a
           >
+        </div>
+      </div>
+    </section>
+
+    <section id="honor" class="section honor-section">
+      <div class="section-inner">
+        <div class="honor-feature">
+          <div>
+            <div class="section-heading">
+              <p class="eyebrow">Honor Hall</p>
+              <h2>荣誉殿堂</h2>
+              <p>
+                AI
+                判定、机器人维护和公开资料整理都需要持续成本。荣誉殿堂用于感谢发电群友，也让电费和
+                Token 成本能被公开追踪。
+              </p>
+              <p>
+                高阶档位默认拥有其下所有档位权限；以下名单仅展示匿名称呼与历史最高发电档位。
+              </p>
+            </div>
+
+            <div class="honor-actions">
+              <a
+                class="button button-primary"
+                :href="sponsorUrl"
+                target="_blank"
+                rel="noreferrer"
+                >爱发电赞助计划</a
+              >
+              <a
+                class="button"
+                :href="ledgerUrl"
+                target="_blank"
+                rel="noreferrer"
+                >查看收支明细</a
+              >
+            </div>
+
+            <div class="supporter-panel" aria-label="发电群友感谢名单">
+              <div class="supporter-panel-head">
+                <span>{{ supporterThanks.length }} 位</span>
+                <strong>感谢发电群友(名单截至2026-06)</strong>
+              </div>
+              <div class="supporter-marquee">
+                <div class="supporter-track">
+                  <span
+                    v-for="(supporter, index) in rollingSupporters"
+                    :key="`${supporter.name}-${supporter.tier}-${index}`"
+                    class="supporter-chip"
+                  >
+                    <b>{{ supporter.name }}</b>
+                    <small>{{ supporter.tier }}</small>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <figure class="sponsor-guide-card">
+            <img :src="sponsorGuideImage" alt="发电档位与权限说明" />
+            <figcaption>发电档位与权限说明</figcaption>
+          </figure>
+        </div>
+
+        <p class="tier-note">
+          档位按权益递进展示：后续每一级默认继承之前全部权益，并追加本级专属权限。
+        </p>
+
+        <div class="tier-grid">
+          <article
+            v-for="tier in honorTiers"
+            :key="tier.title"
+            class="tier-card"
+          >
+            <div>
+              <h3>{{ tier.title }}</h3>
+              <p class="tier-amount">{{ tier.amount }}</p>
+            </div>
+            <p>{{ tier.privilege }}</p>
+          </article>
         </div>
       </div>
     </section>
