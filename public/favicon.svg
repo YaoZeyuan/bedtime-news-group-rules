@@ -1,18 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
   <title id="title">睡前消息讨论群规则站图标</title>
-  <desc id="desc">深色方章中的金色规则文档、讨论气泡和 BN 字母标识，代表 BedNews。</desc>
+  <desc id="desc">透明背景上的金色规则文档、讨论气泡和 BN 字母标识，代表 BedNews。</desc>
   <defs>
     <linearGradient id="paper" x1="16" x2="48" y1="12" y2="54" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#fff1c2" />
       <stop offset="1" stop-color="#f0bd5d" />
     </linearGradient>
-    <linearGradient id="seal" x1="8" x2="56" y1="4" y2="60" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#34271f" />
-      <stop offset="1" stop-color="#17100d" />
-    </linearGradient>
   </defs>
-  <rect width="64" height="64" fill="url(#seal)" rx="14" />
-  <path fill="#47372e" d="M12 49c6.5-3.7 13.2-5.6 20.2-5.6 7.3 0 13.9 1.9 19.8 5.6v5H12z" opacity=".55" />
   <path fill="url(#paper)" d="M18 10h22l8 8v29c0 3.3-2.7 6-6 6H22c-3.3 0-6-2.7-6-6V12c0-1.1.9-2 2-2z" />
   <path fill="#cc8f31" d="M40 10v8h8z" />
   <path fill="#211815" d="M25 24h16v4H25zm0 9h16v4H25z" opacity=".86" />
