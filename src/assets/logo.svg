@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">睡前消息讨论群规则站图标</title>
+  <desc id="desc">透明背景上的金色规则文档、讨论气泡和 BN 字母标识，代表 BedNews。</desc>
+  <defs>
+    <linearGradient id="paper" x1="16" x2="48" y1="12" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff1c2" />
+      <stop offset="1" stop-color="#f0bd5d" />
+    </linearGradient>
+  </defs>
+  <path fill="url(#paper)" d="M18 10h22l8 8v29c0 3.3-2.7 6-6 6H22c-3.3 0-6-2.7-6-6V12c0-1.1.9-2 2-2z" />
+  <path fill="#cc8f31" d="M40 10v8h8z" />
+  <path fill="#211815" d="M25 24h16v4H25zm0 9h16v4H25z" opacity=".86" />
+  <path fill="#286b5b" d="M21 38h15c3.8 0 7 2.6 7 5.9s-3.2 5.9-7 5.9h-6.1L24 54v-4.2h-3c-3.8 0-7-2.6-7-5.9S17.2 38 21 38z" />
+  <circle cx="24" cy="44" r="1.8" fill="#fffaf0" />
+  <circle cx="30" cy="44" r="1.8" fill="#fffaf0" />
+  <circle cx="36" cy="44" r="1.8" fill="#fffaf0" />
+  <path fill="#fffaf0" d="M20 19h4.9c2.2 0 3.5 1 3.5 2.7 0 1-.5 1.8-1.4 2.2 1.1.4 1.7 1.2 1.7 2.4 0 1.7-1.4 2.8-3.7 2.8h-5zm3 2.2v1.7h1.3c.7 0 1.1-.3 1.1-.9s-.4-.8-1.1-.8zm0 3.8v1.9h1.6c.7 0 1.1-.3 1.1-.9 0-.7-.4-1-1.1-1zm7-6h2.9l2.4 5.5V19H38v10h-2.9l-2.4-5.4V29H30z" />
+  <path fill="#f6efe3" d="M12 13.5h40" opacity=".18" />
+</svg>

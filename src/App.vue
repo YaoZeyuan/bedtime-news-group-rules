@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from "vue";
 import fallbackRules from "../群组文档/rule.md?raw";
 import heroImage from "./assets/hero.png";
+import logoImage from "./assets/logo.svg";
 import sponsorGuideImage from "./assets/爱发电权益说明.jpg";
 
 type RuleStatus = "loading" | "live" | "fallback";
@@ -41,8 +42,7 @@ const principles = [
 const discussionHighlights = [
   {
     topic: "AI 与产业现实",
-    question:
-      "“国产 AI 已经完全自主”这类说法，哪些有证据，哪些只是营销叙事？",
+    question: "“国产 AI 已经完全自主”这类说法，哪些有证据，哪些只是营销叙事？",
     detail:
       "讨论从芯片、训练、推理、部署成本和行业反馈进行拆解。有人提出乐观判断，也有人用具体采购和部署经验降温，最后通常落到“证据链够不够完整”。",
     tags: ["AI", "产业", "证据链"],
@@ -509,8 +509,8 @@ function escapeAttribute(value: string) {
   <span id="top"></span>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="回到首页">
-      <span class="brand-mark">BN</span>
-      <span>睡前消息讨论群规则站</span>
+      <span class="brand-mark">睡前<br />消息</span>
+      <span>睡前消息讨论组</span>
       <small>非官方</small>
     </a>
 
@@ -546,7 +546,7 @@ function escapeAttribute(value: string) {
           </a>
         </div>
 
-        <dl class="principle-strip" aria-label="规则站关键机制">
+        <dl class="principle-strip" aria-label="规则运行关键机制">
           <div v-for="item in principles" :key="item.label">
             <dt>{{ item.value }}</dt>
             <dd>{{ item.label }}</dd>
@@ -863,9 +863,7 @@ function escapeAttribute(value: string) {
 
   <footer class="site-footer">
     <div class="section-inner">
-      <p>
-        注意：本站为非官方爱好者群组规则站，与《睡前消息》节目官方并无组织关联。
-      </p>
+      <p>注意：本站为非官方讨论组，与《睡前消息》节目官方并无组织关联。</p>
     </div>
   </footer>
 </template>

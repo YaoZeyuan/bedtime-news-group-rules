@@ -126,10 +126,15 @@ h3 {
 
 .brand-mark {
   display: inline-grid;
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   place-items: center;
   border: 1px solid var(--ink);
+  border-radius: 60px;
+  word-break: break-all;
+  white-space: break-spaces;
+  text-align: center;
+  line-height: 14px;
   background: var(--ink);
   color: var(--paper);
   font-size: 12px;
