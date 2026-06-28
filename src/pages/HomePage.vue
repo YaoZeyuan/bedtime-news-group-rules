@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
-import { Analytics } from "@vercel/analytics/vue";
-import { SpeedInsights } from "@vercel/speed-insights/vue";
+
 import fallbackRules from "../../群组文档/rule.md?raw";
 import fallbackCases from "../../群组文档/释规案例库/case-database.md?raw";
 import heroImage from "../assets/hero.png";
@@ -18,7 +17,6 @@ import SiteFooter from "../components/home/SiteFooter.vue";
 import SiteHeader from "../components/home/SiteHeader.vue";
 import ValueSection from "../components/home/ValueSection.vue";
 import type { RuleStatus } from "../types/home";
-import { normalizeSearchText, parseCaseRecords } from "../utils/cases";
 import { renderMarkdown } from "../utils/markdown";
 
 const repoUrl = "https://github.com/YaoZeyuan/bedtime-news-group-rules";
@@ -43,8 +41,6 @@ const caseMarkdown = ref(fallbackCases);
 const caseStatus = ref<RuleStatus>("loading");
 const caseError = ref("");
 const casesLoadedAt = ref("");
-const caseSearch = ref("");
-const activeCaseId = ref("");
 
 const heroActions = [
   { label: "围观讨论现场", href: "#field-notes" },
@@ -240,24 +236,6 @@ const culturePoints = [
   },
 ];
 
-const changelogItems = [
-  {
-    version: "1.3.2",
-    date: "2026-06-27",
-    text: "审判中增加联系上下文策略，统一部分豁免场景，降低调侃误判。",
-  },
-  {
-    version: "1.3.1",
-    date: "2026-06-07",
-    text: "明确连续发言大于等于 7 条后的口头警告与正式警告流程。",
-  },
-  {
-    version: "1.3.0",
-    date: "2026-06-06",
-    text: "增加以身作则原则、禁止刷屏规则，并将释规文档迁移至 GitHub。",
-  },
-];
-
 const linkGroups = [
   {
     label: "GitHub 仓库",
@@ -312,26 +290,7 @@ const caseStatusText = computed(() => {
 });
 
 const renderedRules = computed(() => renderMarkdown(ruleMarkdown.value));
-const caseRecords = computed(() => parseCaseRecords(caseMarkdown.value));
-const filteredCaseRecords = computed(() => {
-  const query = normalizeSearchText(caseSearch.value);
-  if (!query) return caseRecords.value;
-
-  return caseRecords.value.filter((record) =>
-    normalizeSearchText(
-      `${record.id} ${record.title} ${record.plainText}`,
-    ).includes(query),
-  );
-});
-const selectedCaseRecord = computed(() => {
-  return (
-    filteredCaseRecords.value.find(
-      (record) => record.id === activeCaseId.value,
-    ) ??
-    filteredCaseRecords.value[0] ??
-    null
-  );
-});
+const renderedCases = computed(() => renderMarkdown(caseMarkdown.value));
 
 let activeSectionFrame = 0;
 
@@ -421,19 +380,6 @@ async function loadCases() {
     caseError.value = error instanceof Error ? error.message : "未知错误";
   }
 
-  ensureActiveCase();
-}
-
-function ensureActiveCase() {
-  if (caseRecords.value.some((record) => record.id === activeCaseId.value)) {
-    return;
-  }
-
-  activeCaseId.value = caseRecords.value[0]?.id ?? "";
-}
-
-function selectCaseRecord(recordId: string) {
-  activeCaseId.value = recordId;
 }
 
 function handleInternalLinkClick(event: MouseEvent, href: string) {
@@ -558,8 +504,6 @@ function updateActiveSection() {
 
 <template>
   <span id="top"></span>
-  <Analytics />
-  <SpeedInsights />
   <SiteHeader
     :nav-items="navItems"
     :active-section-id="activeSectionId"
@@ -586,18 +530,12 @@ function updateActiveSection() {
       @reload="loadRules"
     />
     <CasesSection
-      v-model:case-search="caseSearch"
       :case-status="caseStatus"
       :case-status-text="caseStatusText"
       :case-error="caseError"
       :cases-url="casesUrl"
-      :changelog-url="changelogUrl"
-      :case-records="caseRecords"
-      :filtered-case-records="filteredCaseRecords"
-      :selected-case-record="selectedCaseRecord"
-      :changelog-items="changelogItems"
+      :rendered-cases="renderedCases"
       @reload="loadCases"
-      @select="selectCaseRecord"
     />
     <HonorSection
       :sponsor-url="sponsorUrl"
