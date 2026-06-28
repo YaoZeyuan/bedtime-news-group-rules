@@ -28,6 +28,7 @@
   --gold: #b68428;
   --blue: #315f82;
   --shadow: 0 18px 50px rgba(59, 43, 30, 0.12);
+  --header-scroll-offset: 84px;
 }
 
 * {
@@ -154,11 +155,15 @@ h3 {
 }
 
 .site-nav a {
+  border-radius: 999px;
   padding: 8px 10px;
   color: var(--muted);
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
 }
 
 .site-nav a:hover,
@@ -166,7 +171,13 @@ h3 {
   color: var(--rust-dark);
 }
 
+.site-nav a.is-active {
+  background: var(--ink);
+  color: #fffaf0;
+}
+
 .section {
+  scroll-margin-top: var(--header-scroll-offset);
   padding: clamp(56px, 8vw, 104px) 0;
 }
 

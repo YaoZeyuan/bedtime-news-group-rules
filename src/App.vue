@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import fallbackRules from "../群组文档/rule.md?raw";
 import heroImage from "./assets/hero.png";
 import sponsorGuideImage from "./assets/爱发电权益说明.jpg";
@@ -30,6 +30,15 @@ const heroActions = [
   { label: "群规全文", href: "#rules" },
   { label: "资料导航", href: "#links" },
 ];
+
+const navItems = [
+  { label: "讨论现场", id: "field-notes" },
+  { label: "规则全文", id: "rules" },
+  { label: "荣誉殿堂", id: "honor" },
+  { label: "资料导航", id: "links" },
+];
+
+const activeSectionId = ref("");
 
 const principles = [
   { value: "AI", label: "辅助裁定" },
@@ -286,8 +295,36 @@ const ruleStatusText = computed(() => {
 
 const renderedRules = computed(() => renderMarkdown(ruleMarkdown.value));
 
+let activeSectionFrame = 0;
+
 onMounted(() => {
   void loadRules();
+  syncHeaderScrollOffset();
+  window.addEventListener("scroll", requestActiveSectionUpdate, {
+    passive: true,
+  });
+  window.addEventListener("resize", handleWindowResize);
+  window.addEventListener("hashchange", handleLocationHashChange);
+  window.addEventListener("popstate", handleLocationHashChange);
+
+  const initialTargetId = getHashTarget(window.location.hash);
+  if (initialTargetId) {
+    window.requestAnimationFrame(() =>
+      scrollToSection(initialTargetId, "auto", false),
+    );
+  } else {
+    requestActiveSectionUpdate();
+  }
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", requestActiveSectionUpdate);
+  window.removeEventListener("resize", handleWindowResize);
+  window.removeEventListener("hashchange", handleLocationHashChange);
+  window.removeEventListener("popstate", handleLocationHashChange);
+  if (activeSectionFrame) {
+    window.cancelAnimationFrame(activeSectionFrame);
+  }
 });
 
 async function loadRules() {
@@ -315,6 +352,120 @@ async function loadRules() {
     ruleStatus.value = "fallback";
     ruleError.value = error instanceof Error ? error.message : "未知错误";
   }
+}
+
+function handleInternalLinkClick(event: MouseEvent, href: string) {
+  const targetId = getHashTarget(href);
+  if (!targetId) return;
+
+  syncHeaderScrollOffset();
+
+  if (targetId === "top" || window.location.hash === `#${targetId}`) {
+    event.preventDefault();
+    scrollToSection(targetId);
+  }
+
+  if (navItems.some((item) => item.id === targetId)) {
+    activeSectionId.value = targetId;
+  }
+}
+
+function handleLocationHashChange() {
+  syncHeaderScrollOffset();
+  window.requestAnimationFrame(requestActiveSectionUpdate);
+}
+
+function handleWindowResize() {
+  syncHeaderScrollOffset();
+  requestActiveSectionUpdate();
+}
+
+function getHashTarget(href: string) {
+  if (!href.startsWith("#")) return "";
+
+  try {
+    return decodeURIComponent(href.slice(1)) || "top";
+  } catch {
+    return href.slice(1) || "top";
+  }
+}
+
+function scrollToSection(
+  targetId: string,
+  behavior: ScrollBehavior = "smooth",
+  updateHash = true,
+) {
+  syncHeaderScrollOffset();
+
+  const normalizedTargetId = targetId || "top";
+  const target =
+    normalizedTargetId === "top"
+      ? document.getElementById("top")
+      : document.getElementById(normalizedTargetId);
+
+  if (!target) return;
+
+  if (updateHash) {
+    const nextHash = `#${normalizedTargetId}`;
+    if (window.location.hash !== nextHash) {
+      window.history.pushState(null, "", nextHash);
+    }
+  }
+
+  if (normalizedTargetId === "top") {
+    window.scrollTo({ top: 0, behavior });
+  } else {
+    target.scrollIntoView({ block: "start", behavior });
+  }
+
+  if (navItems.some((item) => item.id === normalizedTargetId)) {
+    activeSectionId.value = normalizedTargetId;
+  }
+}
+
+function syncHeaderScrollOffset() {
+  document.documentElement.style.setProperty(
+    "--header-scroll-offset",
+    `${getHeaderOffset()}px`,
+  );
+}
+
+function getHeaderOffset() {
+  const header = document.querySelector<HTMLElement>(".site-header");
+  return (header?.offsetHeight ?? 0) + 12;
+}
+
+function requestActiveSectionUpdate() {
+  if (activeSectionFrame) return;
+  activeSectionFrame = window.requestAnimationFrame(updateActiveSection);
+}
+
+function updateActiveSection() {
+  activeSectionFrame = 0;
+
+  const headerOffset = getHeaderOffset();
+  const activationLine =
+    headerOffset + Math.min(160, window.innerHeight * 0.28);
+  let currentSectionId = "";
+
+  for (const item of navItems) {
+    const section = document.getElementById(item.id);
+    if (!section) continue;
+
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= activationLine && rect.bottom > headerOffset) {
+      currentSectionId = item.id;
+    }
+  }
+
+  const isAtPageEnd =
+    window.scrollY + window.innerHeight >=
+    document.documentElement.scrollHeight - 2;
+  if (isAtPageEnd) {
+    currentSectionId = navItems[navItems.length - 1]?.id ?? currentSectionId;
+  }
+
+  activeSectionId.value = currentSectionId;
 }
 
 function renderMarkdown(source: string) {
@@ -507,17 +658,27 @@ function escapeAttribute(value: string) {
 <template>
   <span id="top"></span>
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="回到首页">
+    <a
+      class="brand"
+      href="#top"
+      aria-label="回到首页"
+      @click="handleInternalLinkClick($event, '#top')"
+    >
       <span class="brand-mark">睡前<br />消息</span>
       <span>睡前消息讨论组</span>
       <small>非官方</small>
     </a>
 
     <nav class="site-nav" aria-label="站内导航">
-      <a href="#field-notes">讨论现场</a>
-      <a href="#rules">规则全文</a>
-      <a href="#honor">荣誉殿堂</a>
-      <a href="#links">资料导航</a>
+      <a
+        v-for="item in navItems"
+        :key="item.id"
+        :class="{ 'is-active': activeSectionId === item.id }"
+        :href="`#${item.id}`"
+        :aria-current="activeSectionId === item.id ? 'location' : undefined"
+        @click="handleInternalLinkClick($event, `#${item.id}`)"
+        >{{ item.label }}</a
+      >
     </nav>
   </header>
 
@@ -538,6 +699,7 @@ function escapeAttribute(value: string) {
             :key="action.href"
             class="button button-primary"
             :href="action.href"
+            @click="handleInternalLinkClick($event, action.href)"
           >
             {{ action.label }}
           </a>
