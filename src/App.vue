@@ -2,7 +2,6 @@
 import { computed, onMounted, ref } from "vue";
 import fallbackRules from "../群组文档/rule.md?raw";
 import heroImage from "./assets/hero.png";
-import logoImage from "./assets/logo.svg";
 import sponsorGuideImage from "./assets/爱发电权益说明.jpg";
 
 type RuleStatus = "loading" | "live" | "fallback";
