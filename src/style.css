@@ -155,7 +155,8 @@ h3 {
 }
 
 .site-nav a {
-  border-radius: 999px;
+  /* 不需要显示为圆角 */
+  /* border-radius: 999px; */
   padding: 8px 10px;
   color: var(--muted);
   font-size: 14px;

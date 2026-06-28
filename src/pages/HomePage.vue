@@ -53,7 +53,7 @@ const heroActions = [
 const navItems = [
   { label: "讨论现场", id: "field-notes" },
   { label: "规则全文", id: "rules" },
-  { label: "释规记录", id: "cases" },
+  // { label: "释规记录", id: "cases" },
   { label: "荣誉殿堂", id: "honor" },
   { label: "资料导航", id: "links" },
 ];
@@ -285,7 +285,7 @@ const ruleStatusText = computed(() => {
 const caseStatusText = computed(() => {
   if (caseStatus.value === "loading") return "正在读取 GitHub 释规记录";
   if (caseStatus.value === "live")
-    return `已读取 GitHub 记录${casesLoadedAt.value ? `：${casesLoadedAt.value}` : ""}`;
+    return `已读取 GitHub 记录，文档更新于${casesLoadedAt.value ? `：${casesLoadedAt.value}` : ""}`;
   return "GitHub 读取失败，正在显示本地快照";
 });
 
@@ -379,7 +379,6 @@ async function loadCases() {
     caseStatus.value = "fallback";
     caseError.value = error instanceof Error ? error.message : "未知错误";
   }
-
 }
 
 function handleInternalLinkClick(event: MouseEvent, href: string) {
@@ -499,7 +498,6 @@ function updateActiveSection() {
 
   activeSectionId.value = currentSectionId;
 }
-
 </script>
 
 <template>

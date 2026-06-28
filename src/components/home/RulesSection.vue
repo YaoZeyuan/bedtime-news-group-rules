@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import type { RuleStatus } from "../../types/home";
 
 defineProps<{
@@ -12,6 +13,8 @@ defineProps<{
 const emit = defineEmits<{
   reload: [];
 }>();
+
+const isExpanded = ref(false);
 </script>
 
 <template>
@@ -33,6 +36,15 @@ const emit = defineEmits<{
           <span class="status-pill" :class="`status-${ruleStatus}`">{{
             ruleStatusText
           }}</span>
+          <button
+            class="button button-primary"
+            type="button"
+            aria-controls="rules-document"
+            :aria-expanded="isExpanded"
+            @click="isExpanded = !isExpanded"
+          >
+            {{ isExpanded ? "收起全文" : "展开文档" }}
+          </button>
           <button class="button" type="button" @click="emit('reload')">
             重新读取
           </button>
@@ -42,13 +54,18 @@ const emit = defineEmits<{
         </div>
       </div>
 
-      <p v-if="ruleStatus === 'fallback'" class="fallback-notice">
+      <p v-if="isExpanded && ruleStatus === 'fallback'" class="fallback-notice">
         GitHub Raw 暂时不可用：{{
           ruleError
         }}。当前展示的是随网站构建内置的本地快照。
       </p>
 
-      <article class="markdown-body" v-html="renderedRules"></article>
+      <article
+        v-if="isExpanded"
+        id="rules-document"
+        class="markdown-body"
+        v-html="renderedRules"
+      ></article>
     </div>
   </section>
 </template>
