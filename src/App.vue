@@ -38,6 +38,8 @@ const navItems = [
   { label: "资料导航", id: "links" },
 ];
 
+// 跳转时的安全边距，这里配置为0，以保障视觉效果
+const anchorScrollGap = 0;
 const activeSectionId = ref("");
 
 const principles = [
@@ -358,12 +360,8 @@ function handleInternalLinkClick(event: MouseEvent, href: string) {
   const targetId = getHashTarget(href);
   if (!targetId) return;
 
-  syncHeaderScrollOffset();
-
-  if (targetId === "top" || window.location.hash === `#${targetId}`) {
-    event.preventDefault();
-    scrollToSection(targetId);
-  }
+  event.preventDefault();
+  scrollToSection(targetId);
 
   if (navItems.some((item) => item.id === targetId)) {
     activeSectionId.value = targetId;
@@ -372,6 +370,10 @@ function handleInternalLinkClick(event: MouseEvent, href: string) {
 
 function handleLocationHashChange() {
   syncHeaderScrollOffset();
+  const targetId = getHashTarget(window.location.hash);
+  if (targetId) {
+    scrollToSection(targetId, "smooth", false);
+  }
   window.requestAnimationFrame(requestActiveSectionUpdate);
 }
 
@@ -405,17 +407,21 @@ function scrollToSection(
 
   if (!target) return;
 
+  const targetTop =
+    normalizedTargetId === "top"
+      ? 0
+      : window.scrollY + target.getBoundingClientRect().top - getHeaderOffset();
+
+  window.scrollTo({
+    top: Math.max(0, Math.round(targetTop)),
+    behavior,
+  });
+
   if (updateHash) {
     const nextHash = `#${normalizedTargetId}`;
     if (window.location.hash !== nextHash) {
       window.history.pushState(null, "", nextHash);
     }
-  }
-
-  if (normalizedTargetId === "top") {
-    window.scrollTo({ top: 0, behavior });
-  } else {
-    target.scrollIntoView({ block: "start", behavior });
   }
 
   if (navItems.some((item) => item.id === normalizedTargetId)) {
@@ -432,7 +438,7 @@ function syncHeaderScrollOffset() {
 
 function getHeaderOffset() {
   const header = document.querySelector<HTMLElement>(".site-header");
-  return (header?.offsetHeight ?? 0) + 12;
+  return (header?.getBoundingClientRect().height ?? 0) + anchorScrollGap;
 }
 
 function requestActiveSectionUpdate() {
