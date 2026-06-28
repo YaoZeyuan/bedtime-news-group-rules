@@ -42,7 +42,7 @@ const discussionHighlights = [
   {
     topic: "AI 与产业现实",
     question:
-      "“国产 AI 已经完全自主”这类说法，哪些部分有证据，哪些只是营销叙事？",
+      "“国产 AI 已经完全自主”这类说法，哪些有证据，哪些只是营销叙事？",
     detail:
       "讨论从芯片、训练、推理、部署成本和行业反馈进行拆解。有人提出乐观判断，也有人用具体采购和部署经验降温，最后通常落到“证据链够不够完整”。",
     tags: ["AI", "产业", "证据链"],
@@ -506,6 +506,7 @@ function escapeAttribute(value: string) {
 </script>
 
 <template>
+  <span id="top"></span>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="回到首页">
       <span class="brand-mark">BN</span>
@@ -523,7 +524,7 @@ function escapeAttribute(value: string) {
     </nav>
   </header>
 
-  <main id="top">
+  <main>
     <section class="hero-section">
       <img class="hero-art" :src="heroImage" alt="" aria-hidden="true" />
       <div class="section-inner hero-content">
