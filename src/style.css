@@ -338,6 +338,184 @@ h3 {
   color: #fffaf0;
 }
 
+.honor-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+.supporter-panel {
+  margin-top: 28px;
+  border: 1px solid rgba(255, 250, 240, 0.22);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 250, 240, 0.08);
+}
+
+.supporter-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid rgba(255, 250, 240, 0.16);
+  padding: 14px 16px;
+}
+
+.supporter-panel-head span {
+  color: #f0bd5d;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.supporter-panel-head strong {
+  color: #fffaf0;
+  font-size: 16px;
+}
+
+.supporter-marquee {
+  overflow: hidden;
+  padding: 16px 0;
+}
+
+.supporter-track {
+  display: flex;
+  width: max-content;
+  gap: 12px;
+  animation: supporter-scroll 42s linear infinite;
+}
+
+.supporter-chip {
+  display: inline-flex;
+  min-width: 170px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid rgba(255, 250, 240, 0.18);
+  border-radius: 999px;
+  padding: 9px 12px;
+  background: rgba(0, 0, 0, 0.16);
+  color: #fffaf0;
+}
+
+.supporter-chip b,
+.supporter-chip small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.supporter-chip b {
+  max-width: 110px;
+  font-size: 14px;
+}
+
+.supporter-chip small {
+  color: #f0bd5d;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.sponsor-guide-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: 1px solid rgba(255, 250, 240, 0.22);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 250, 240, 0.08);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+}
+
+.sponsor-guide-card img {
+  display: block;
+  width: 100%;
+  max-height: 620px;
+  object-fit: contain;
+  background: #f6dce4;
+}
+
+.sponsor-guide-card figcaption {
+  border-top: 1px solid rgba(255, 250, 240, 0.16);
+  padding: 12px 14px;
+  color: #d8cfc1;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.supporter-board {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+  margin-top: 34px;
+}
+
+.supporter-group {
+  display: flex;
+  height: 168px;
+  min-height: 0;
+  flex-direction: column;
+  border: 1px solid rgba(255, 250, 240, 0.22);
+  border-radius: 8px;
+  padding: 16px;
+  background: rgba(255, 250, 240, 0.08);
+  overflow: hidden;
+}
+
+.supporter-group h3 {
+  flex: 0 0 auto;
+  margin-bottom: 12px;
+  color: #f0bd5d;
+  font-size: 18px;
+}
+
+.supporter-names {
+  display: flex;
+  min-height: 0;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-color: rgba(240, 189, 93, 0.65) rgba(255, 250, 240, 0.08);
+  scrollbar-width: thin;
+}
+
+.supporter-names::-webkit-scrollbar {
+  width: 8px;
+}
+
+.supporter-names::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: rgba(255, 250, 240, 0.08);
+}
+
+.supporter-names::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(240, 189, 93, 0.65);
+}
+
+.supporter-name {
+  border: 1px solid rgba(255, 250, 240, 0.16);
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: #fffaf0;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.tier-note {
+  margin-top: 34px;
+  border-left: 4px solid #f0bd5d;
+  padding: 10px 14px;
+  background: rgba(255, 250, 240, 0.08);
+  color: #e5dccd;
+  font-weight: 800;
+}
+
 .tier-grid,
 .rule-card-grid,
 .culture-grid,
@@ -364,7 +542,7 @@ h3 {
 
 .tier-card {
   display: flex;
-  min-height: 240px;
+  min-height: 230px;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
@@ -379,6 +557,16 @@ h3 {
 .tier-amount {
   margin-top: 8px;
   font-weight: 900;
+}
+
+@keyframes supporter-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .two-column {
@@ -674,9 +862,19 @@ h3 {
   }
 
   .tier-grid,
+  .supporter-board,
   .rule-card-grid,
   .link-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .honor-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .sponsor-guide-card {
+    width: 100%;
+    max-width: 520px;
   }
 
   .two-column,
@@ -717,6 +915,7 @@ h3 {
   .principle-strip,
   .culture-grid,
   .tier-grid,
+  .supporter-board,
   .rule-card-grid,
   .link-grid {
     grid-template-columns: 1fr;
@@ -737,5 +936,33 @@ h3 {
 
   .markdown-body {
     padding: 18px;
+  }
+
+  .supporter-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+    padding-inline: 16px;
+  }
+
+  .supporter-chip {
+    min-width: 0;
+  }
+
+  .sponsor-guide-card {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .supporter-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+    padding-inline: 16px;
   }
 }

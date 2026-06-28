@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from "vue";
 import fallbackRules from "../群组文档/rule.md?raw";
 import heroImage from "./assets/hero.png";
+import sponsorGuideImage from "./assets/爱发电权益说明.jpg";
 
 type RuleStatus = "loading" | "live" | "fallback";
 
@@ -83,6 +84,49 @@ const honorTiers = [
     privilege: "每自然月有一次机会重置任一用户的全量违规记录。",
   },
 ];
+
+const supporterGroups = [
+  {
+    tier: "无暗者",
+    names: ["贝****", "卧*******", "大*", "买*******"],
+  },
+  {
+    tier: "光之祭司",
+    names: ["短*******", "魂*****"],
+  },
+  {
+    tier: "太阳神官",
+    names: ["黑**"],
+  },
+  {
+    tier: "祈光人",
+    names: ["马**"],
+  },
+  {
+    tier: "歌颂者",
+    names: [
+      "督********",
+      "爱发电用户_高*\*\**",
+      "爱发电用户_f1436",
+      "阿*",
+      "L***",
+      "爱发电用户_4f2e4",
+      "爱发电用户_9d2f3",
+      "爱发电用户_d796f",
+      "a********",
+      "n*******",
+      "远**",
+      "叶***",
+      "海*",
+    ],
+  },
+];
+
+const supporterThanks = supporterGroups.flatMap((group) =>
+  group.names.map((name) => ({ name, tier: group.tier })),
+);
+
+const rollingSupporters = [...supporterThanks, ...supporterThanks];
 
 const culturePoints = [
   {
@@ -451,28 +495,85 @@ function escapeAttribute(value: string) {
 
     <section id="honor" class="section honor-section">
       <div class="section-inner">
-        <div class="section-heading">
-          <p class="eyebrow">Honor Hall</p>
-          <h2>荣誉殿堂</h2>
-          <p>
-            AI
-            判定、机器人维护和公开资料整理都需要持续成本。荣誉殿堂用于感谢发电群友，也让电费和
-            Token 成本能被公开追踪。
-          </p>
+        <div class="honor-feature">
+          <div>
+            <div class="section-heading">
+              <p class="eyebrow">Honor Hall</p>
+              <h2>荣誉殿堂</h2>
+              <p>
+                AI
+                判定、机器人维护和公开资料整理都需要持续成本。荣誉殿堂用于感谢发电群友，也让电费和
+                Token 成本能被公开追踪。
+              </p>
+              <p>
+                高阶档位默认拥有其下所有档位权限；以下名单仅展示匿名称呼与历史最高发电档位。
+              </p>
+            </div>
+
+            <div class="honor-actions">
+              <a
+                class="button button-primary"
+                :href="sponsorUrl"
+                target="_blank"
+                rel="noreferrer"
+                >爱发电赞助计划</a
+              >
+              <a
+                class="button"
+                :href="ledgerUrl"
+                target="_blank"
+                rel="noreferrer"
+                >查看收支明细</a
+              >
+            </div>
+
+            <div class="supporter-panel" aria-label="发电群友感谢名单">
+              <div class="supporter-panel-head">
+                <span>{{ supporterThanks.length }} 位</span>
+                <strong>感谢发电群友(名单截至2026-06)</strong>
+              </div>
+              <div class="supporter-marquee">
+                <div class="supporter-track">
+                  <span
+                    v-for="(supporter, index) in rollingSupporters"
+                    :key="`${supporter.name}-${supporter.tier}-${index}`"
+                    class="supporter-chip"
+                  >
+                    <b>{{ supporter.name }}</b>
+                    <small>{{ supporter.tier }}</small>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <figure class="sponsor-guide-card">
+            <img :src="sponsorGuideImage" alt="发电档位与权限说明" />
+            <figcaption>发电档位与权限说明</figcaption>
+          </figure>
         </div>
 
-        <div class="honor-actions">
-          <a
-            class="button button-primary"
-            :href="sponsorUrl"
-            target="_blank"
-            rel="noreferrer"
-            >爱发电赞助计划</a
+        <div class="supporter-board">
+          <article
+            v-for="group in supporterGroups"
+            :key="group.tier"
+            class="supporter-group"
           >
-          <a class="button" :href="ledgerUrl" target="_blank" rel="noreferrer"
-            >查看收支明细</a
-          >
+            <h3>{{ group.tier }}</h3>
+            <div class="supporter-names">
+              <span
+                v-for="name in group.names"
+                :key="`${group.tier}-${name}`"
+                class="supporter-name"
+                >{{ name }}</span
+              >
+            </div>
+          </article>
         </div>
+
+        <p class="tier-note">
+          档位按权益递进展示：后续每一级默认继承之前全部权益，并追加本级专属权限。
+        </p>
 
         <div class="tier-grid">
           <article
