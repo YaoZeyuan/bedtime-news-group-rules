@@ -1,0 +1,134 @@
+{
+  "groups": [
+    {
+      "id": "daily-quota",
+      "title": "每日150条发言配额用完场景",
+      "cases": [
+        {
+          "id": "quota-nearly-used",
+          "title": "即将用完",
+          "messages": [
+            {
+              "id": "quota-nearly-used-notice",
+              "title": "提醒话术",
+              "text": "友情提示： @xx 今日发言配额还剩y条。\n建议可以考虑综合表述想法和观点后，做今日最后总结陈词了。\n（本条无需回复）"
+            }
+          ]
+        },
+        {
+          "id": "quota-used-up",
+          "title": "已用完",
+          "messages": [
+            {
+              "id": "quota-used-up-notice",
+              "title": "配额用完通知",
+              "text": " @xx  很遗憾，你已经用完了今天的150条发言配额，明天见。"
+            }
+          ]
+        },
+        {
+          "id": "quota-exceeded",
+          "title": "超出配额",
+          "messages": [
+            {
+              "id": "quota-exceeded-warning-1",
+              "title": "第1次警告",
+              "text": "今日超配额警告第1次 @xx"
+            },
+            {
+              "id": "quota-exceeded-warning-2",
+              "title": "第2次警告",
+              "text": "今日超配额警告第2次 @xx"
+            },
+            {
+              "id": "quota-exceeded-warning-3",
+              "title": "第3次警告并临时移出",
+              "text": "今日超配额警告第3次 @xx ，将执行临时移除出群操作。明日0点后可拉回"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "warnings",
+      "title": "警告",
+      "cases": [
+        {
+          "id": "regular-warning",
+          "title": "例常警告",
+          "messages": [
+            {
+              "id": "regular-warning-judgement",
+              "title": "展示审判结果中的违规记录",
+              "text": "1. 发言者：xxx\n涉嫌违规发言：\n[2026-06-25 14:18:12] xxx: 别搬💩了\n\n引用群规：\n【厦门新城际群聊规则】第2条：“沟通过程中保持诚恳礼貌冷静……避免将沟通演变为怼人。”\n【厦门新城际群聊规则】第1条：“不侮辱他人，不人身攻击。”\n判定分析： 将群友分享的内容直接定义为“💩”（屎），属于极不礼貌的攻击性言论，带有明显的侮辱性，属于典型的“怼人”行为，严重降低了群内的沟通质量。"
+            },
+            {
+              "id": "regular-warning-send",
+              "title": "发送警告",
+              "text": "警告 @xx"
+            },
+            {
+              "id": "regular-warning-revoke",
+              "title": "撤销警告",
+              "text": "撤销 @xx"
+            },
+            {
+              "id": "regular-warning-no-warning",
+              "title": "不予警告，撤销",
+              "text": "[以管理员身份予以背书，给出理由后]不予警告"
+            }
+          ]
+        },
+        {
+          "id": "seven-day-warning",
+          "title": "持续时间7天警告",
+          "messages": [
+            {
+              "id": "seven-day-warning-top3",
+              "title": "Top3用户",
+              "text": "注意，由于身为Top3用户，所以本次警告持续7天 @XXX"
+            },
+            {
+              "id": "seven-day-warning-regular",
+              "title": "普通用户",
+              "text": "注意，本次警告持续7天 @XXX"
+            }
+          ]
+        },
+        {
+          "id": "top3-extra-warning",
+          "title": "针对Top3用户补充警告",
+          "messages": [
+            {
+              "id": "top3-extra-warning-note",
+              "title": "补充说明",
+              "text": "补一下xx的 top3 持续 7 天警告"
+            },
+            {
+              "id": "top3-extra-warning-send",
+              "title": "发送警告",
+              "text": "警告@xx"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "top3-notice",
+      "title": "通知30天内违规数Top3用户",
+      "cases": [
+        {
+          "id": "top3-user-list-notice",
+          "title": "Top3用户列表通知",
+          "messages": [
+            {
+              "id": "top3-user-list-notice-message",
+              "title": "通知话术",
+              "text": "若30天内累计被警告数大于5且位列排行榜Top3，后续警告默认7天直到从Top3名单中移出。以下为当前Top3用户列表，后续警告均满足维持7天标准，欢迎升级无暗者重置警告\n\n@xxx\n@yyy\n@zzz"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

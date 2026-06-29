@@ -3,6 +3,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 
 import fallbackRules from "../../群组文档/rule.md?raw";
 import fallbackCases from "../../群组文档/释规案例库/case-database.md?raw";
+import fallbackSpeechTemplates from "../../群组文档/常用话术/话术模版.json?raw";
 import heroImage from "../assets/hero.png";
 import sponsorGuideImage from "../assets/爱发电权益说明.jpg";
 import AboutSection from "../components/home/AboutSection.vue";
@@ -15,19 +16,25 @@ import RulesOverviewSection from "../components/home/RulesOverviewSection.vue";
 import RulesSection from "../components/home/RulesSection.vue";
 import SiteFooter from "../components/home/SiteFooter.vue";
 import SiteHeader from "../components/home/SiteHeader.vue";
+import SpeechTemplatesSection from "../components/home/SpeechTemplatesSection.vue";
 import ValueSection from "../components/home/ValueSection.vue";
-import type { RuleStatus } from "../types/home";
+import type { RuleStatus, SpeechTemplateConfig } from "../types/home";
 import { renderMarkdown } from "../utils/markdown";
+import { parseSpeechTemplateConfig } from "../utils/speechTemplates";
 
 const repoUrl = "https://github.com/YaoZeyuan/bedtime-news-group-rules";
 const encodedRulePath = "%E7%BE%A4%E7%BB%84%E6%96%87%E6%A1%A3/rule.md";
 const encodedCasePath =
   "%E7%BE%A4%E7%BB%84%E6%96%87%E6%A1%A3/%E9%87%8A%E8%A7%84%E6%A1%88%E4%BE%8B%E5%BA%93/case-database.md";
+const encodedSpeechTemplatePath =
+  "%E7%BE%A4%E7%BB%84%E6%96%87%E6%A1%A3/%E5%B8%B8%E7%94%A8%E8%AF%9D%E6%9C%AF/%E8%AF%9D%E6%9C%AF%E6%A8%A1%E7%89%88.json";
 const ruleRawUrl = `https://raw.githubusercontent.com/YaoZeyuan/bedtime-news-group-rules/main/${encodedRulePath}`;
 const caseRawUrl = `https://raw.githubusercontent.com/YaoZeyuan/bedtime-news-group-rules/main/${encodedCasePath}`;
+const speechTemplateRawUrl = `https://raw.githubusercontent.com/YaoZeyuan/bedtime-news-group-rules/main/${encodedSpeechTemplatePath}`;
 const ruleSourceUrl = `${repoUrl}/blob/main/${encodedRulePath}`;
 const changelogUrl = `${repoUrl}/blob/main/%E7%BE%A4%E7%BB%84%E6%96%87%E6%A1%A3/changelog.md`;
 const casesUrl = `${repoUrl}/blob/main/${encodedCasePath}`;
+const speechTemplateSourceUrl = `${repoUrl}/blob/main/${encodedSpeechTemplatePath}`;
 const sponsorUrl = "https://ifdian.net/a/bedtime-news-group/plan";
 const ledgerUrl = "https://docs.qq.com/space/DY3J6YnhJRGttTGJM";
 const aiRankingUrl = "http://t.cn/AXbn82u3";
@@ -41,12 +48,19 @@ const caseMarkdown = ref(fallbackCases);
 const caseStatus = ref<RuleStatus>("loading");
 const caseError = ref("");
 const casesLoadedAt = ref("");
+const speechTemplates = ref<SpeechTemplateConfig>(
+  parseSpeechTemplateConfig(fallbackSpeechTemplates),
+);
+const speechTemplateStatus = ref<RuleStatus>("loading");
+const speechTemplateError = ref("");
+const speechTemplatesLoadedAt = ref("");
 
 const heroActions = [
   { label: "围观讨论现场", href: "#field-notes" },
   { label: "我们看重什么", href: "#why-follow" },
   { label: "群规全文", href: "#rules" },
   { label: "释规记录", href: "#cases" },
+  { label: "常用话术", href: "#speech-templates" },
   { label: "资料导航", href: "#links" },
 ];
 
@@ -54,6 +68,7 @@ const navItems = [
   { label: "讨论现场", id: "field-notes" },
   { label: "规则全文", id: "rules" },
   // { label: "释规记录", id: "cases" },
+  { label: "常用话术", id: "speech-templates" },
   { label: "荣誉殿堂", id: "honor" },
   { label: "资料导航", id: "links" },
 ];
@@ -253,6 +268,11 @@ const linkGroups = [
     description: "浏览规则解释与边界案例",
   },
   {
+    label: "常用话术配置",
+    href: speechTemplateSourceUrl,
+    description: "查看管理员可复制话术模板",
+  },
+  {
     label: "群规变更记录",
     href: changelogUrl,
     description: "追踪群规演进",
@@ -289,6 +309,14 @@ const caseStatusText = computed(() => {
   return "GitHub 读取失败，正在显示本地快照";
 });
 
+const speechTemplateStatusText = computed(() => {
+  if (speechTemplateStatus.value === "loading")
+    return "正在读取 GitHub 常用话术";
+  if (speechTemplateStatus.value === "live")
+    return `已读取 GitHub 记录，文档更新于${speechTemplatesLoadedAt.value ? `：${speechTemplatesLoadedAt.value}` : ""}`;
+  return "GitHub 读取失败，正在显示本地快照";
+});
+
 const renderedRules = computed(() => renderMarkdown(ruleMarkdown.value));
 const renderedCases = computed(() => renderMarkdown(caseMarkdown.value));
 
@@ -297,6 +325,7 @@ let activeSectionFrame = 0;
 onMounted(() => {
   void loadRules();
   void loadCases();
+  void loadSpeechTemplates();
   syncHeaderScrollOffset();
   window.addEventListener("scroll", requestActiveSectionUpdate, {
     passive: true,
@@ -378,6 +407,35 @@ async function loadCases() {
     caseMarkdown.value = fallbackCases;
     caseStatus.value = "fallback";
     caseError.value = error instanceof Error ? error.message : "未知错误";
+  }
+}
+
+async function loadSpeechTemplates() {
+  speechTemplateStatus.value = "loading";
+  speechTemplateError.value = "";
+
+  try {
+    const response = await fetch(`${speechTemplateRawUrl}?t=${Date.now()}`, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      throw new Error(`GitHub Raw 返回 ${response.status}`);
+    }
+
+    const text = await response.text();
+    if (!text.trim()) {
+      throw new Error("GitHub Raw 返回空内容");
+    }
+
+    speechTemplates.value = parseSpeechTemplateConfig(text);
+    speechTemplateStatus.value = "live";
+    speechTemplatesLoadedAt.value = new Date().toLocaleString("zh-CN", {
+      hour12: false,
+    });
+  } catch (error) {
+    speechTemplates.value = parseSpeechTemplateConfig(fallbackSpeechTemplates);
+    speechTemplateStatus.value = "fallback";
+    speechTemplateError.value = error instanceof Error ? error.message : "未知错误";
   }
 }
 
@@ -534,6 +592,14 @@ function updateActiveSection() {
       :cases-url="casesUrl"
       :rendered-cases="renderedCases"
       @reload="loadCases"
+    />
+    <SpeechTemplatesSection
+      :template-config="speechTemplates"
+      :template-status="speechTemplateStatus"
+      :template-status-text="speechTemplateStatusText"
+      :template-error="speechTemplateError"
+      :template-source-url="speechTemplateSourceUrl"
+      @reload="loadSpeechTemplates"
     />
     <HonorSection
       :sponsor-url="sponsorUrl"

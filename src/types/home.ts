@@ -53,3 +53,27 @@ export type LinkGroup = {
   href: string;
   description: string;
 };
+
+export type SpeechTemplateConfig = {
+  groups: SpeechTemplateGroup[];
+};
+
+export type SpeechTemplateGroup = {
+  id: string;
+  title: string;
+  description?: string;
+  cases: SpeechTemplateCase[];
+};
+
+export type SpeechTemplateCase = {
+  id: string;
+  title: string;
+  description?: string;
+  messages: SpeechTemplateMessage[];
+};
+
+export type SpeechTemplateMessage = {
+  id: string;
+  title: string;
+  text: string;
+};
