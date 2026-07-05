@@ -3,7 +3,7 @@
 
 查看群规/细节释规：https://bit.ly/4uu61GE
 
-查看群聊机器人功能: https://bit.ly/43SVCsW
+查看群聊机器人功能: https://bit.ly/4wuetHh
 
 群知识库(警告列表/收支详情): http://t.cn/AXfeDam8
 
